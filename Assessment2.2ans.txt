@@ -1,0 +1,122 @@
+1.
+a=int(input())
+b=int(input())
+l=[]
+for i in range(2,1000):
+    if a%i==0 and b%i==0:
+        l.append(i)
+print(max(l))
+.................................................
+2.
+def is_power(a,b):
+    flag=0
+    for i in range(2,100):
+        if a%b==0:
+            s=b**i
+            if s==a:
+                print(b,"power",i,"is",a)
+                flag=1
+                return True
+    if flag==0:
+        return False
+            
+a=int(input())
+b=int(input()) 
+print(is_power(a,b))
+........................................................
+3.
+def factI(n):
+	p=1
+	for i in range(1,n+1):
+	    p=p*i
+	return p
+def factR(n):
+	return 1 if (n==0 or n==1) else n*factR(n-1)
+n=int(input())
+print(factI(n))
+print(factR(n))
+.........................................................
+4.
+
+def bin_to_dec(b):
+    i=0
+    dec=0
+    bin=b
+    while(b!=0):
+        res=b%10
+        dec=dec+res*(2**i)
+        i=i+1
+        b=int(b/10)
+    print(dec)
+a=10011
+bin_to_dec(a)
+
+.........................................................
+5.
+def sumDigits(s):
+    a="0123456789"
+    l=[]
+    for i in s:
+        if i in a:
+	        l.append(int(i))
+    if len(l)!=0:
+        sm=0
+        for j in l:
+            sm=sm+j
+    try:
+        print(sm)
+    except:
+        print("no numbers entered")
+
+s="abvcd"
+sumDigits(s)
+s="a2v3b"
+sumDigits(s)
+
+............................................................
+6.
+def findAnEven(l):
+    j=0
+    for i in l:
+        if i%2==0:
+            x=i
+            break
+    try:
+        print(x)
+        
+    except:
+        if j==0:
+            print("Even number not present")
+            j=1
+l=[1,7,4,8]
+findAnEven(l)
+m=[1,3,5,7,9]
+findAnEven(m)
+..............................................................
+7.
+def isPalindrome(s):
+    l=[]
+    a="abcdefghijklmnopqrstuvwxyz"
+    t=str.lower(s)
+    for i in t:
+        if i in a:
+            l.append(t)
+    t1=l[::-1]
+    if l==t1:
+        print("palindrome")
+	
+s="n1oo,n"
+isPalindrome(s)
+
+.................................................................
+8.
+def eval_loop(s):
+    print(eval(s))
+a=input()
+while(a!='done'):
+    eval_loop(a)
+    a=input()
+
+..................................................................
+9.
+
