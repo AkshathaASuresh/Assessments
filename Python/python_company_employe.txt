@@ -1,0 +1,41 @@
+class Company:
+    __display_count=5
+    _disp_number=8
+    displ=120
+    def __init__(self,name):
+        self.name="Accenture"
+    def show_name(self):
+        print(self.name)
+    def show_count_private(cls):
+        print(cls. __display_count) 
+    def show_count_protected(cls):
+        print(cls. _disp_number)  
+    def show_count_public(cls):
+        print(cls.displ) 
+        
+class employe(Company):
+    def __init__(self,e_name,name):
+        self.e_name="Ahaan"
+        Company.__init__(self,name)
+    def stat_fun(n1,n2):
+        print(n1+n2)
+       
+        
+C=Company('ytur')
+E=employe('tree','actr')
+C.show_name()
+C.show_count_protected()
+C.show_count_private()
+employe.stat_fun(3,7)
+print("printing class variables")
+print(Company.displ)
+print(Company._disp_number)
+# print(Company.__display_count)
+
+# AttributeError: type object 'Company' has no attribute '__display_count'  
+print("public")
+E.show_count_public()
+print("protected")
+E.show_count_protected()
+print("private")
+E.show_count_private()

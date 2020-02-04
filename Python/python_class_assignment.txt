@@ -1,0 +1,49 @@
+
+#cannot create more than 5 instances in a class
+import math
+class point:
+    count = 0
+    def __new__(cls, *args, **kwargs):
+        cls.count += 1
+        if(cls.count>5):
+            raise TypeError("More than 5 objects are created")
+        else:
+            return object.__new__(cls)
+    def __init__(self,a=0,b=0):
+        self.x=a
+        self.y=b
+    def distance(self,p):
+        d=math.sqrt((p.x-self.x)**2 + (p.y-self.y)**2)
+        return d
+    def midpoint(self,p):
+        p.x=(self.x+p.x)/2
+        p.y=(self.y+p.y)/2
+        return p
+p=point()
+p1=point(4,5)
+p2=point(7,9)
+p3=point()
+p4=point()
+p5=point()
+p6=point()
+print(p1.distance(p))
+print(p1.distance(p2))
+p=p1.midpoint(p2)
+print(p.x,",",p.y) 
+
+
+
+
+__new__ handles object creation.
+That is when we create instance. 
+The method __new__ will be called when instance is being created. 
+Using this method we can customize the instance creation. 
+This the method which will be called first then __init__ will be called to initialize instance when you are creating instance.
+
+
+__init__ handles object initialization.
+This method is called when an object is created from a class and it allows the class to initialize the attributes of the class.
+
+
+
+
