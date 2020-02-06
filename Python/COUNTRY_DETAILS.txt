@@ -14,6 +14,8 @@ def cuuent_time (c_name,details,h,m):
         if c_name==keys:
             actual_hour=h+values[5]
             actual_minute=m+values[6]
+            if actual_hour<0:
+                actual_hour=24+actual_hour
             print("current Time=", actual_hour,":",actual_minute,values[0])
 country=['UK','USA','INDIA','MEXICO','AUSTRALIA']
 time_zone=["gmt","est","ist","cst","adet"]
@@ -47,3 +49,4 @@ amount=float(input("Amount:"))
 cuuent_time (c_name,details,h,m)
 determine_lang(c_name,details)
 currency_val(c_name,amount,details)
+
