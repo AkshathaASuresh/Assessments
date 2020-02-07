@@ -1,0 +1,98 @@
+1.
+import re
+def valid_mail_id(input1):
+    list_of_valid_mails=['gmail','hotmail','yahoo','accenture','oerr']
+    x=re.search(r'([^\w])([a-z]*)', input1)
+    mail=x.group(2)
+    if mail in list_of_valid_mails:
+        print(input1,"is a valid mail id")
+    else:
+        print("Invalid email id entered")
+            
+
+input1='therain2345as@orr.com'
+valid_mail_id(input1)
+
+2. 
+import re
+def valid_mail_name(inputw):
+    
+    x=re.search(r'([\w]*)(.)(@)', inputw)
+    mail_name=x.group(1)
+    c=x.group(2)
+    if len(mail_name)==2 and c=='.':
+        print(input1,"is a email id which contains only 2 characters in the mail_name")
+    else:
+        print("Email id entered does not satisfy requirements")
+            
+
+input1='asa.@orr.com'
+input2='th.@orr.com'
+valid_mail_name(input1)
+valid_mail_name(input2)
+
+
+3.
+def sum_od_digits(input1):
+    sum=0
+    x=filter(lambda x: x.isdigit(), input1)
+    for i in x:
+        sum=sum+int(i)
+    return sum
+
+input1='a3ad4v5'
+print(sum_od_digits(input1))
+
+4.
+def pyramid(): 
+    k = 2*5 - 2
+    for i in range(0, 5): 
+        for j in range(0, k): 
+            print(end=" ") 
+        k = k - 1
+        for l in range(0, i+1): 
+            print("* ", end="") 
+        print("\r") 
+pyramid() 
+
+5.
+
+
+
+
+6.
+
+7.
+d={'a':1,'e':2,'i':3,'o':4,'u':5}
+s='elephant'
+sum=0
+for i in s:
+    for j in d:
+        if j==i:
+            sum=sum+int(d[j])
+print(sum)  
+
+8.
+ 
+
+9.
+def palin(x):
+    if x>0:
+        tot=0
+        a=x
+        while a!=0:
+            r=a%10
+            tot=tot*10+r
+            a=int(a/10)
+        print(tot)
+        if tot==x and x>0:
+            return True
+        else:
+            return False
+    else:
+            return False
+x=123
+y=-1223221
+print(palin(x))
+print(palin(y))     
+    
