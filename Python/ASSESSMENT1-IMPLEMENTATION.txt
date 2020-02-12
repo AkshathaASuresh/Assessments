@@ -1,0 +1,115 @@
+PYTHON ASSESSMENT
+-----------------
+
+1. Find the number:
+Generate 10 random numbers between 0 to 50 and ask user to predict one number with three chances
+and return True/False
+
+Ex. OP
+op: Hi, Could you guess one number between 0 to 50.. ??
+ip: 34
+op: Sorry!! But you are close to that.. Try again
+ip: 21
+op: Yeah... right...!!!
+
+import random
+l=[]
+for i in range (10):
+    l.append(random.randrange(0,50))
+x=int(input("Enter a  number bewween 1 and 50: "))
+
+for k in l:
+    if x==k:
+        flag=1
+    elif abs(x-k)<=5:  
+        flag=2
+    else:
+        flag=0
+if flag==1:
+    print("Yeah you are right")
+elif flag==2:
+    print("Sorry!! But you are close to that.. Try again")
+else:
+    print("Try again!")
+
+output:
+Enter a  number bewween 1 and 50: 34                                                                                          
+Sorry!! But you are close to that.. Try again
+
+2. ONE PLUS TWO o/p THREE
+TWO DIVIDE TWO o/p ONE
+FOUR MINUS ONE o/p THREE
+
+Note: use one digit ip and op
+
+d={'one':'1','two':'2','three':'3','four':'4','five':'5','six':'6','seven':'7','eight':'8','nine':'9'}
+e={'plus':'+','minus':'-','multily':'*','divide':'/'}
+s=input("Enter the expression: \n")
+l=s.split(" ")
+# print(l)
+for k in d:
+    if l[0]==k:
+        a=d.get(k)
+    if l[2]==k:
+        b=d.get(k)
+# print(a,b)
+for key in e:
+    if l[1]==key:
+        x=a+e.get(key)+b
+        
+print(eval(x))
+
+output:
+Enter the expression:                                                                                                         
+two plus nine                                                                                                                 
+11
+
+3. Ask user to enter number & check whether the number is divisible by 3, 5 and both
+
+i=int(input("Enter a number"))
+if i%3==0 and i%5==0:
+    print('divisible by both')
+elif i%3==0 and i%5!=0:
+    print('divisible by 3 only')
+elif i%3!=0 and i%5==0:
+    print('dvisible by 5 only')
+else:
+    print('not divisible by 5 or 3')
+
+output:
+Enter a number45                                                                                                              
+divisible by both
+
+4. Get the range from user and find sum of series which is divisible by 3
+
+i=int(input("Enter starting range: "))
+j=int(input("Enter ending range: "))
+sum=0
+for  k in range(i,j):
+    if k%3==0:
+        sum+=k
+print(sum)
+
+output:
+Enter starting range: 3                                                                                                       
+Enter ending range: 78                                                                                                        
+975
+
+5. What day is this date: 
+Ask user to enter Birthdate with Year -- print the day
+(NOTE: Use calendar.day_name function)
+import calendar
+i=int(input("enter year"))
+j=int(input("enter month"))
+k=int(input("enter date of the month"))
+day = calendar.weekday(i, j, k)
+print(day)
+print(calendar.day_name[day])
+
+
+output:
+enter year2000                                                                                                                
+enter month6                                                                                                                  
+enter date of the month6                                                                                                      
+1                                                                                                                             
+Tuesday 
