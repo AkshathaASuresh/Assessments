@@ -1,0 +1,219 @@
+1. 
+s= "raindeer"
+s1=""
+for i in s:
+    s1=i+s1
+
+print(s)
+print(s1)
+
+2.
+s= "AcCeNtUrE"
+ss=s.swapcase()
+print(ss)
+
+3.
+a="accenture"
+d={}
+
+for i in a:
+    if i in d:
+        d[i]=d[i]+1
+    else:
+        d[i]=1
+        
+print(d)
+
+
+4.
+l=[]
+e=[]
+o=[]
+for i in range(1,51):
+   l.append(i)
+   if i%2==0:
+       e.append(i)
+   else:
+        o.append(i)
+   
+print(l)
+print(e)
+print(o)
+
+5.
+e=[]
+for j in range(1,50):
+   e.append(j)
+for i in e:
+    if i%3==0 and i%5==0:
+       print('fizz-buzz')
+    elif i%3==0 and i%5!=0:
+        print('fizz')
+    elif i%3!=0 and i%5==0:
+        print('buzz')
+    else:
+        print(i)
+6.
+x='accenture'
+a=0
+e=0
+u=0
+for i in x:
+    if(i=='a'):
+        a=a+1
+    if(i=='e'):
+        e=e+1
+    if(i=='u'):
+        u=u+1
+d="{0}a{1}e{2}u"
+print(d.format(a,e,u))
+
+7.
+a="ga24nbv2k6jg523jg2545lsfwe"
+n="1234567890"
+count=0
+alphabet=0
+for i in a:
+    if i in n:
+        count=count+1
+    else:
+       alphabet=alphabet+1
+print(count)
+print(alphabet)
+
+
+8.
+x=[]
+for i in range(1,11):
+    x.append(i)
+n=len(x)
+for i in range(0,n):
+    for j in range(0,n):
+        if(x[i]+x[j]==9):
+            print(x[i],x[j])
+
+
+
+9.
+x='dad'
+y='add'
+xd=list(x)
+yd=list(y)
+print(yd)
+if(sorted(xd)==sorted(yd)):
+    print(" anagram")
+else:
+    print('not anagram')
+
+10.
+x=int(input())
+l=[]
+flag=0
+for i in range(2,x):
+    if(x%i)==0:
+        print("Not a prime number")
+        flag=1
+        break
+else:
+    print("Prime number")
+    
+if flag==1:
+    for y in range (2,x):
+        if x%y==0:
+            l.append(y)
+    print("Prime divisors")
+    for z in l:
+        for k in range (2,z):
+            if z%k==0:
+                break
+        else:
+            print(z)
+
+
+11.
+x=(1,2,3,4,5)
+s=list(x)
+s.append('a')
+x1=tuple(s)
+print(x1)
+
+12.
+x=input()
+y=x[::-1]
+print(y)
+if(x==y):
+    print("palindrome")
+
+13.
+a=int(input())
+for i in range(1,11):
+    p=a*i
+    print(a,"*",i,"=",p)
+
+
+14.
+a=-1
+b=1
+fib=0
+
+while(fib<51):
+    fib=a+b
+    a=b
+    b=fib
+    print(fib)
+15.
+a="green-red-yellow-black-white"
+s=a.split("-")
+print(s)
+s.sort()
+print(s)
+print('-'.join(s))
+
+16.
+a=[1,2,3,3,3,3,4,5]
+b=[]
+for i in a:
+    if i not in b:
+        b.append(i)
+print(a)
+print(b)
+
+17.
+a="abcdefghijklmnopqrstuvwxyz"
+c="The quick brown fox jumps over the lazy dog"
+for i in a:
+        if i not in c:
+            print("no")
+            break
+else: 
+    print("panagram")
+
+
+18.
+x=[]
+for i in range(5):
+    a=int(input())
+    x.append(a)
+print(x)
+for j in x:
+    max=0
+    if((j%2!=0)and(j>max)):
+        max=j
+        
+if max==0:
+    print ("no odd number entered")
+print(max)
+
+19.
+x=int(input())
+a=3.142*x*x
+print(a)
+
+20.
+def factorial(n): 
+     
+    return 1 if (n==1 or n==0) else n * factorial(n - 1);  
+num = 6; 
+print(factorial(num))
+
+
