@@ -56,6 +56,17 @@ def pyramid():
 pyramid() 
 
 5.
+def camel_case(n):
+    for i in n:
+        b=ord(i)
+        if b <90:
+            b=b+32
+            print(chr(b),end="")
+        else:
+            b=b-32
+            print(chr(b),end="")
+a=input("Enter a string: ")
+camel_case(a)
 
 
 
@@ -73,6 +84,19 @@ for i in s:
 print(sum)  
 
 8.
+l=["wcab","wcde","wcbe"]
+d={}
+a=[]
+for i in l:
+    a.append(i[2])
+    d[i[2]] = i
+# print(d)
+a.sort()
+new=[]
+for i in a:
+    if i in d:
+        new.append(d.get(i))
+print("new list sorted based on 3rd element is :",new)
  
 
 9.
