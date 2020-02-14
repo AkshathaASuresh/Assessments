@@ -1,0 +1,141 @@
+1.
+
+c=int(input())
+li=[]
+for i in range(c):
+    a=input()
+    li.append(a)
+print(li)
+set_li=tuple(li)
+d={}
+for k in  set_li:
+    d[k]=0
+for i in li:
+    for k in d:
+        if i==k:
+            d[k]+=1
+# print(d)
+print(len(d)) #number of distinct
+for ke,va in d.items():
+
+    print(va, end=" ")
+
+
+2. 
+
+l=[]
+c=int(input())
+for i in range(c):
+    a=input()
+    e=a.split(" ")
+    l.append(e)
+print(l)
+nume=1
+deno=1
+for k in l:
+    nume*=int(k[0])
+    deno*=int(k[1])
+print(nume," ",deno)
+
+for g in range(2,deno):
+    if nume%g==0 and deno%g==0:
+        nume/=g
+        deno/=g
+print(nume,"/",deno)
+
+
+
+
+3.
+import re
+a=input()
+se=re.search("[\w]{1,64}@([a-z]*[A-Z]*[0-9]*)\.([a-z]*[A-Z]*)", a)
+try:
+    d=se.group(2)
+    if len(d)>50:
+        raise ArithmeticError
+    print("valid")
+
+except Exception:
+    print("invalid")
+4.
+
+
+5.
+d={}
+c=int(input())
+for i in range(c):
+    li=[]
+    a=input() #each student
+    e=a.split(" ")
+    f=e[0]
+    for u in range(1,3):
+        li.append(int(e[u]))
+    d[f]=li
+print(d)
+name_input=input()
+for k in d:
+    if k==name_input:
+        list1=d.get(k)
+        print(list1)
+        sum=0
+        for j in list1:
+            sum+=j
+        print(sum/3)
+
+6.
+(trial)
+c=int(input())
+l=[]
+for i in range(c):
+    n=int(input())
+    # li=[]
+    # for j in range(n):
+    s=input()
+    e=s.split(" ")
+    l.append((e))
+print(l)
+for u in l:
+    int(u[0])
+
+
+
+
+
+7.
+li=[]
+lis=[]
+
+for y in range(2):
+    c=int(input())
+    li.append(c)
+for u in range(2):
+    c=int(input())
+    lis.append(c)
+print(li)
+print(lis)
+print("A*B=",end=' ')
+for i in li:
+    for j in lis:
+        print("(",i,",",j,")", end=' ')
+
+8.
+k=int(input())
+c=input()
+for i in c:
+    e=c.split(" ")
+d={}
+r=len(e)
+g=r/k #evaulating number of ppl that should be in each room
+for k in e:
+    if k in d:
+        d[k]+=1
+    else:
+        d[k]=1
+
+print(d)
+for ke,va in d.items():
+    if va==g:#number of ppl in ach room matches
+        pass
+    elif va==1:#captions room
+        print(ke)
