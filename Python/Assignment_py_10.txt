@@ -21,7 +21,7 @@ def valid_mail_name(inputw):
     mail_name=x.group(1)
     c=x.group(2)
     if len(mail_name)==2 and c=='.':
-        print(input1,"is a email id which contains only 2 characters in the mail_name")
+        print(input1,"is a email id which contains atleast 2 characters in the mail_name")
     else:
         print("Email id entered does not satisfy requirements")
             
