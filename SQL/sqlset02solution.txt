@@ -1,5 +1,7 @@
 ProblemSet02 - Questions
 
+ProblemSet02 - Questions
+
 1. Write a valid SQL statement that calculates the total weight of all corn cobs that were picked from the garden:
 
 mysql> SELECT SUM(P.WEIGHT) FROM PICKED P INNER JOIN PLANT ON PLANTFK=PLANTID WHERE PLANTID=2;
@@ -12,9 +14,37 @@ mysql> SELECT SUM(P.WEIGHT) FROM PICKED P INNER JOIN PLANT ON PLANTFK=PLANTID WH
 
 
 2. For some reason Erin has change his location for picking the tomato to North. Write the corresponding query.
-mysql> UPDATE picked set locationFK=(select locationid from location where name='NORTH') where gardenerFK=(select gardenerid from gardener where name='ERIN') and plantFK in(select plantid from plant where name='Tomato' ;
-Query OK, 1 row affected (0.35 sec)
 
+
+mysql> select * from pickeed;
++---------+------------+------------+------------+--------+--------+
+| plantFK | gardenerFK | locationFK | date1      | amount | weight |
++---------+------------+------------+------------+--------+--------+
+|       0 |          2 |          0 | 2012-08-18 |     28 |   2.32 |
+|       0 |          3 |          1 | 2012-08-16 |     12 |   1.02 |
+|       2 |          1 |          3 | 2012-08-22 |     52 |  12.96 |
+|       2 |          2 |          2 | 2012-08-28 |     18 |   4.58 |
+|       3 |          3 |          3 | 2012-08-22 |     15 |   3.84 |
+|       4 |          2 |          0 | 2012-07-16 |     23 |   0.52 |
++---------+------------+------------+------------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE pickeed set locationFK=(select locationid from location where name='NORTH') where gardenerFK=(select gardenerid from gardener where name='ERIN') and plantFK in(select plantid from plants where name='Tomato') ;
+Query OK, 1 row affected (1.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from pickeed;
++---------+------------+------------+------------+--------+--------+
+| plantFK | gardenerFK | locationFK | date1      | amount | weight |
++---------+------------+------------+------------+--------+--------+
+|       0 |          2 |          0 | 2012-08-18 |     28 |   2.32 |
+|       0 |          3 |          1 | 2012-08-16 |     12 |   1.02 |
+|       2 |          1 |          3 | 2012-08-22 |     52 |  12.96 |
+|       2 |          2 |          2 | 2012-08-28 |     18 |   4.58 |
+|       3 |          3 |          1 | 2012-08-22 |     15 |   3.84 |
+|       4 |          2 |          0 | 2012-07-16 |     23 |   0.52 |
++---------+------------+------------+------------+--------+--------+
+6 rows in set (0.00 sec)
 
 
 
@@ -60,7 +90,15 @@ mysql> select p.name from plant p inner join planted pl on p.plantid=pl.plantFK 
 2 rows in set (0.00 sec)
 
 5. List the amount of sunlight and water to all plants with names that start with letter 'c' or letter 'r'.
-
+mysql> SELECT name,sunlight,water from plants where lower(name) like 'c%' or lower(name) like 'r%';
++--------+----------+-------+
+| name   | sunlight | water |
++--------+----------+-------+
+| Carrot |     0.26 |  0.82 |
+| Corn   |     0.44 |  0.76 |
+| Radish |     0.28 |  0.84 |
++--------+----------+-------+
+3 rows in set (0.00 sec)
 
 
 6. Write a valid SQL statement that displays the plant name and the total amount of seed required for each plant that were plant in the garden. The output should be in descending order of plant name.
@@ -80,7 +118,17 @@ mysql> select p.name, seeds from plant p inner join planted pl on p.plantid=pl.p
 +---------+-------+
 8 rows in set (0.00 sec)
 
-7. Write a valid SQL statement that calculates the average number of items produced per seed planted for each plant type:( (Average Number of Items = Total Amount Picked / Total Seeds Planted.)
+7. Write a valid SQL statement that calculates the average number of items produced per seed planted for each plant type:( (Average Number of Items = Total Amount Picked / Total Seeds Planted
+
+mysql> select (sum(amount)/sum(seeds)) as 'Average Number Of Items' from pickeed pi inner join planted pl on pi.plantFK=pl.plantFK group by pi.plantFK;
++-------------------------+
+| Average Number Of Items |
++-------------------------+
+|                  0.9524 |
+|                  2.1875 |
+|                  0.3947 |
+|                  0.7667 |
++-------------------------+
 
 8. Write a valid SQL statement that would produce a result set like the following:
 
@@ -90,15 +138,37 @@ mysql> select p.name, seeds from plant p inner join planted pl on p.plantid=pl.p
  Tim  | Carrot | 2012-08-18 |     28 
 9. Find out persons who picked from the same location as he/she planted.
 
+mysql> select distinct p.name from gardener p inner join pickeed pi on p.gardenerid=pi.gardenerFK inner join planted pl on pl.gardenerFK=p.gardenerid where pi.locationFK=pl.locationFK ;
++--------+
+| name   |
++--------+
+| Father |
+| Tim    |
++--------+
+2 rows in set (0.00 sec)
 
 10. Create a view that lists all the plant names picked from all locations except ’West’ in the month of August.
 
+mysql> create view user as select p.name from plants p join picked pi on p.plantid=pi.plantFK inner join location l on l.locationid=pi.locationFK where l.name !='WEST';
+Query OK, 0 rows affected (1.18 sec)
 
-
-
-
-
-
+mysql> select * from user;
++--------+
+| name   |
++--------+
+| Carrot |
+| Radish |
+| Carrot |
+| Radish |
+| Radish |
+| Carrot |
+| Tomato |
+| Carrot |
+| Corn   |
+| Corn   |
+| Tomato |
++--------+
+11 rows in set (0.07 sec)
 
 
 
