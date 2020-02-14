@@ -1,0 +1,78 @@
+1. convert list to string without using +/concat
+c=["Welcome","to","python"]
+d=' '
+print(d.join(c))
+
+2.Find the ip address use regular expression
+0.0.0.0 to 255.255.255.255
+
+import re
+t=input("Enter IP")
+print(re.match(r"\b(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.)(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.)(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.)(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\b",t))
+
+3.
+ip: "welcome to python"
+op:Welcome To Python
+
+d="welcome to python"
+print(d.title())
+
+4. ip: aaabbbvvccaa
+   op: a3b3v2a2
+
+t=input("enter your word")
+d=[]
+e={ }
+count=0
+for i in t:
+    d.append(i)
+# print(d)
+# print(set(d))
+s=set(d)
+e={ }
+for l in s:
+    e[l]=0
+# print(e)
+for k in d:
+    if k in s:
+        e[k]+=1
+        # count+=1
+        # print(count)
+# print(e)
+for f,g in e.items():
+    i=f+str(g)
+    print(i,end="")
+
+
+5. [(),("a","b"),('','')] - identify the empty tuples
+
+
+for i in t:
+    if len(i)==0:
+        print("the empty tupl=", i)
+
+6.
+{([)]} - false
+{([])} - true
+[({}]- false
+
+open_braces = ['[', '{', '(']
+close_braces = [']', '}', ')']
+sample = str(input('Enter the input string: '))
+l1 = []
+flag=0
+for i in sample:
+        if i in open_braces:
+            l1.append(i)
+        elif i in close_braces:
+            pos = close_braces.index(i)
+            if (len(l1) > 0) and (open_braces[pos] == l1[len(l1) - 1]):
+                l1.pop()
+            else:
+                flag=-1
+if len(l1) == 0 and flag!=-1:
+    print("equal")
+else:
+    print("uequal")
+
+
