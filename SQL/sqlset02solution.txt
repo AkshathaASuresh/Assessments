@@ -136,6 +136,15 @@ mysql> select (sum(amount)/sum(seeds)) as 'Average Number Of Items' from pickeed
 ------|--------|------------|-------- 
  Tim  | Radish | 2012-07-16 |     23 
  Tim  | Carrot | 2012-08-18 |     28 
+ 
+ mysql> select g.name,p.name,pi.date1,pi.amount from pickeed pi inner join plants p on pi.plantFK=p.plantid inner join gardener g on pi.gardenerFK=g.gardenerid where g.name='Tim' and amount>20;
++------+--------+------------+--------+
+| name | name   | date1      | amount |
++------+--------+------------+--------+
+| Tim  | Carrot | 2012-08-18 |     28 |
+| Tim  | Radish | 2012-07-16 |     23 |
++------+--------+------------+--------+
+2 rows in set (0.00 sec)
 9. Find out persons who picked from the same location as he/she planted.
 
 mysql> select distinct p.name from gardener p inner join pickeed pi on p.gardenerid=pi.gardenerFK inner join planted pl on pl.gardenerFK=p.gardenerid where pi.locationFK=pl.locationFK ;
