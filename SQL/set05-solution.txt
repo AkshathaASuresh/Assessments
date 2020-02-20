@@ -1,0 +1,165 @@
+ProblemSet05 - Questions
+1.Give the organiser's name of the concert in the Assembly Rooms after the first of Feb, 1997. (1 point possible)
+
+mysql> select distinct M_NAME,CONCERT_ORGNISER from concert c join musician m on M_NO=CONCERT_ORGNISER where CON_DATE>'1997-02-01';
++---------------+------------------+
+| M_NAME        | CONCERT_ORGNISER |
++---------------+------------------+
+| James Steeple |               21 |
++---------------+------------------+
+1 row in set (0.00 sec)
+2.Find all the performers who played guitar or violin and were born in England. (1 point possible)
+mysql> select m_name from musician m join place p on m.living_in=p.place_no join performer pe  on pe.PERF_IS=m.M_NO where place_country='England' and (INSTRUMENT='violin' or INSTRUMENT='guitar');
++-------------+
+| m_name      |
++-------------+
+| Theo Mengel |
+| Elsie James |
+| James First |
++-------------+
+3 rows in set (0.00 sec)
+3.List the names of musicians who have conducted concerts in USA together with the towns and dates of these concerts. (1 point possible)
+4.How many concerts have featured at least one composition by Andy Jones? List concert date, venue and the composition's title. (1 point possible)
+
+
+
+5.List the different instruments played by the musicians and avg number of musicians who play the instrument. (1 point possible)
+mysql> select distinct INSTRUMENT,count(perf_no) from performer group by INSTRUMENT;
++------------+----------------+
+| INSTRUMENT | count(perf_no) |
++------------+----------------+
+| violin     |              7 |
+| viola      |              4 |
+| banjo      |              1 |
+| guitar     |              2 |
+| trumpet    |              1 |
+| bass       |              3 |
+| flute      |              2 |
+| cornet     |              1 |
+| drums      |              2 |
+| cello      |              3 |
+| trombone   |              1 |
+| horn       |              1 |
+| clarinet   |              1 |
++------------+----------------+
+13 rows in set (0.00 sec)
+
+
+6.List the names, dates of birth and the instrument played of living musicians who play a instrument which Theo also plays. (1 point possible)
+mysql> select M_NAME,BORN,INSTRUMENT from musician m join performer pe on pe.PERF_IS=m.M_NO where INSTRUMENT in (select INSTRUMENT from musician join performer pe  on pe.PERF_IS=M_NO where M_NAME ='Theo Mengel') and died is null;
++-------------+------------+------------+
+| M_NAME      | BORN       | INSTRUMENT |
++-------------+------------+------------+
+| John Smith  | 1950-03-03 | violin     |
+| Theo Mengel | 1948-08-12 | banjo      |
+| Harry Forte | 1951-02-28 | violin     |
+| Theo Mengel | 1948-08-12 | violin     |
+| Harry Forte | 1951-02-28 | drums      |
+| Jeff Dawn   | 1945-12-12 | violin     |
+| James First | 1965-06-10 | violin     |
+| Theo Mengel | 1948-08-12 | drums      |
++-------------+------------+------------+
+8 rows in set (0.00 sec)
+
+7.List the name and the number of players for the band whose number of players is greater than the average number of players in each band. (1 point possible)
+
+mysql> select band_id,count(*)as cnt,band_name from play_in p join band b on p.band_id=b.band_no group by band_id having cnt> (select avg(cntt) from (select count(*) as cntt from play_in group by band_id)as temp2);
++---------+-----+-----------+
+| band_id | cnt | band_name |
++---------+-----+-----------+
+|       1 |   7 | ROP       |
+|       7 |   6 | Oh well   |
+|       2 |   7 | AASO      |
++---------+-----+-----------+
+3 rows in set (0.02 sec)
+
+
+
+8.List the names of musicians who both conduct and compose and live in Britain. (1 point possible)
+mysql> select distinct m_name from musician m join place p on m.living_in=p.place_no join has_composed c on c.CMPR_NO=m.M_NO join performance per on per.CONDUCTED_BY=m.M_NO where place_country='England' or place_country='Scotland';
++-------------+
+| m_name      |
++-------------+
+| Fred Bloggs |
+| Phil Hot    |
+| Jeff Dawn   |
+| Rose Spring |
++-------------+
+4 rows in set (0.00 sec)
+
+
+
+
+9.Show the least commonly played instrument and the number of musicians who play it. (1 point possible)
+
+mysql> select count,instrument from (select count(perf_no)as count,instrument, dense_rank() over(order by count(perf_is)) r from  musician m join performer per on per.PERF_IS=m.M_NO group by instrument) as t where r=1;
++-------+------------+
+| count | instrument |
++-------+------------+
+|     1 | banjo      |
+|     1 | trumpet    |
+|     1 | cornet     |
+|     1 | trombone   |
+|     1 | horn       |
+|     1 | clarinet   |
++-------+------------+
+6 rows in set (0.00 sec)
+
+10.List the bands that have played music composed by Sue Little; Give the titles of the composition in each case. (1 point possible)
+mysql> select distinct C_TITLE, BAND_NAME from musician m join band b on b.BAND_CONTACT=m.M_NO join composition co on co.C_IN=m.LIVING_IN where M_NAME='Sue Little';
++-----------------+------------------+
+| C_TITLE         | BAND_NAME        |
++-----------------+------------------+
+| Complex Rythms  | Swinging strings |
+| Drumming Rythms | Swinging strings |
++-----------------+------------------+
+2 rows in set (0.00 sec)
+
+11.List the name and town of birth of any performer born in the same city as James First.(1 point possible)
+
+mysql> select M_NAME,PLACE_TOWN from musician m join place p on m.BORN_IN=p.PLACE_NO where born_in =(select BORN_IN from musician where M_NAME='James First');
++-------------+------------+
+| M_NAME      | PLACE_TOWN |
++-------------+------------+
+| James First | London     |
+| Theo Mengel | London     |
+| Alan Fluff  | London     |
+| Andy Jones  | London     |
++-------------+------------+
+4 rows in set (0.00 sec)
+
+12.Create a list showing for EVERY musician born in Britain the number of compositions and the number of instruments played. (1 point possible)
+
+
+
+
+13.Give the band name, conductor and contact of the bands performing at the most recent concert in the Royal Albert Hall. (1 point possible)
+mysql> select band_no,band_name,band_contact,conducted_by from band b join performance p on b.band_no=p.gave where performed_in in (select concert_no from concert  where concert_venue="royal albert hall" order by con_date desc);
++---------+---------------------+--------------+--------------+
+| band_no | band_name           | band_contact | conducted_by |
++---------+---------------------+--------------+--------------+
+|       6 | Somebody Loves this |            6 |           14 |
++---------+---------------------+--------------+--------------+
+1 row in set (0.00 sec)
+14.Give a list of musicians associated with Glasgow. Include the name of the musician and the nature of the association - one or more of 'LIVES_IN', 'BORN_IN', 'PERFORMED_IN' AND 'IN_BAND_IN'. (1 point possible)
+select m_name,case when born_in =(select place_no from place where place_town="glasgow") then "glasgow" else "somewhere else" end as born_in,
+  case when  living_in=(select place_no from place where place_town="glasgow") then "glasgow" else "somewhere else" end as living_in
+ ,case when c_in =(select place_no from place where place_town="glasgow") then "glasgow" else "somewhere else" end as c_in
+  from musician m join composer c join composed cc join composition ccc on m.m_no=c.comp_is and c.comp_no=cc.cmpr_no and cc.cmpn_no=ccc.c_no  
+where born_in =(select place_no from place where place_town="glasgow") or living_in in (select place_no from place where place_town="glasgow") or c_in 
+in (select place_no from place where place_town="glasgow") group by m_name;
+
++-------------+----------------+----------------+----------------+
+| m_name      | born_in        | living_in      | c_in           |
++-------------+----------------+----------------+----------------+
+| James First | somewhere else | somewhere else | glasgow        |
+| Phil Hot    | somewhere else | somewhere else | glasgow        |
+| Jeff Dawn   | somewhere else | glasgow        | glasgow        |
+| Rose Spring | somewhere else | somewhere else | glasgow        |
+| Lovely Time | glasgow        | somewhere else | somewhere else |
+| Andy Jones  | somewhere else | glasgow        | somewhere else |
++-------------+----------------+----------------+----------------+
+6 rows in set (0.03 sec)
+
+
+15.Jeff Dawn plays in a band with someone who plays in a band with Sue Little. Who is it and what are the bands? (1 point possible)
