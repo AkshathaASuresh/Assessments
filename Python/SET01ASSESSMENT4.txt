@@ -1,0 +1,202 @@
+mysql> create table sale(id int(2), bill_date date, product_id int(2), product_quantity int(2));
+Query OK, 0 rows affected (1.42 sec)
+mysql> create table product(id int(2), product_name varchar(20), product_code varchar(20), price int);
+Query OK, 0 rows affected (1.08 sec)
+#inserting into product
+import csv
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+try:
+    f=open("product_file.csv","r");
+    s=f.read().splitlines()
+    print(s)
+    for i in s:
+        r=i.split(",")
+        print(r)
+        for u in r:
+            print(u)
+        cursor.execute("insert into product values(%s,%s,%s,%s)",r)
+        db.commit()
+        try:
+            print(2/0)
+        except ZeroDivisionError:
+            print("please dont divide by zero")
+        try:
+            print(2+['aa'])
+        except TypeError:
+            print("Ivalid input t")
+except FileNotFoundError:
+    print("File seems to br missing")
+finally:
+    f.close()
+
+#inserting into sale
+import csv
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+f=open("sale-file.csv","r");
+s=f.read().splitlines()
+print(s)
+for i in s:
+    r=i.split(",")
+    print(r)
+    for u in r:
+        print(u)
+    # cursor.execute("insert into employer(id,name,phone,salary) values(%s,%s,%s,%s)",a)
+    cursor.execute("insert into sale values(%s,%s,%s,%s)",r)
+    db.commit()
+
+mysql> select * from product;
++------+-----------------+--------------+-------+
+| id   | product_name    | product_code | price |
++------+-----------------+--------------+-------+
+|    1 | SONY LED TV     | SONY-LED-S43 | 58300 |
+|    2 | YAMAHA Speakers | YHT-1840     | 26500 |
+|    3 | JBL Speakers    | JBL-100      | 18600 |
++------+-----------------+--------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from sale;
++------+------------+------------+------------------+
+| id   | bill_date  | product_id | product_quantity |
++------+------------+------------+------------------+
+|    1 | 2019-05-10 |          1 |                2 |
+|    2 | 2020-01-01 |          3 |                4 |
+|    3 | 2020-02-03 |          2 |                1 |
++------+------------+------------+------------------+
+3 rows in set (0.00 sec)
+
+1.
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+print("maximum - sold product with product details ")
+cursor.execute("select product_name,product_code,price from( select product_name,product_code,price,dense_rank() over(order by max(product_quantity) desc) as r from product p join sale s on p.id=s.product_id group by product_id) as t where r=1")
+print(cursor.fetchall())
+output:
+maximum - sold product with product details 
+[('JBL Speakers', 'JBL-100', 18600)]
+
+2.
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+print("minimumum - sold product with product details ")
+cursor.execute("select product_name,product_code,price from( select product_name,product_code,price,dense_rank() over(order by max(product_quantity) asc) as r from product p join sale s on p.id=s.product_id group by product_id) as t where r=1")
+print(cursor.fetchall())
+
+output:
+minimumum - sold product with product details 
+[('YAMAHA Speakers', 'YHT-1840', 26500)]
+
+
+
+3.
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+x=input("Eter Your Bill date:")
+cursor.execute("select product_name,product_code,price from sale s join product p on p.id=s.product_id where bill_date=%s",(x,))
+print("\nYour Product Details are")
+print(cursor.fetchall())
+
+output:
+Eter Your Bill date:2019-05-10
+
+Your Product Details are
+[('SONY LED TV', 'SONY-LED-S43', 58300)]
+
+
+4.
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+x=input("Eter Product Code:")
+cursor.execute("select product_name,product_code,price from sale s join product p on p.id=s.product_id where product_code=%s",(x,))
+print("\nYour Product Details are")
+print(cursor.fetchall())
+
+output:
+Eter Product Code:YHT-1840
+
+Your Product Details are
+[('YAMAHA Speakers', 'YHT-1840', 26500)]
+
+
+5.
+import mysql.connector
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+cursor=db.cursor()
+n=int(input("number of inserts required"))
+li=[]
+for e in range (0,n):
+    r=[]
+    for i in range(4):
+        a=input()
+        r.append(a)
+    li.append(r)
+print(li)
+for t in li:
+    cursor.execute("insert into product values(%s,%s,%s,%s)",t)
+db.commit()
+
+
+OUTPUT:
+number of inserts required2
+1
+racket
+RAC-20
+400
+21
+samsung
+SAM-90
+30000
+[['1', 'racket', 'RAC-20', '400'], ['21', 'samsung', 'SAM-90', '30000']]
+
+mysql> SELECT * FROM PRODUCT;
++------+-----------------+--------------+-------+
+| id   | product_name    | product_code | price |
++------+-----------------+--------------+-------+
+|    1 | SONY LED TV     | SONY-LED-S43 | 58300 |
+|    2 | YAMAHA Speakers | YHT-1840     | 26500 |
+|    3 | JBL Speakers    | JBL-100      | 18600 |
+|    1 | racket          | RAC-20       |   400 |
+|   21 | samsung         | SAM-90       | 30000 |
++------+-----------------+--------------+-------+
+5 rows in set (0.00 sec)
+
+
+
+ set 01 CREATE LOG FILE:
+
+import logging
+import mysql.connector
+logging.basicConfig(filename="log_created.txt", filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
+db=mysql.connector.connect(host="localhost", user="root",password="root",database="practice")
+logging.info('Database connection established successful with server address and host')
+cursor=db.cursor()
+x=input("Eter Product Code:")
+logging.info('User gave a Product Code %s', x)
+cursor.execute("select product_name,product_code,price from sale s join product p on p.id=s.product_id where product_code=%s",(x,))
+print("\nYour Product Details are")
+print(cursor.fetchall())
+logging.info('User queried product details for %s Product Code',x)
+
+
+OUTPUT IN LOG FILE:
+2020-02-21 12:46:29,040 - Database connection established successful with server address and host
+2020-02-21 12:46:33,862 - User gave a Product Code SONY-LED-S43
+2020-02-21 12:46:33,866 - User queried product details for SONY-LED-S43 Product Code
+2020-02-21 12:54:29,520 - Database connection established successful with server address and host
+2020-02-21 12:54:55,348 - User gave a Product Code JBL-100
+2020-02-21 12:54:55,350 - User queried product details for JBL-100 Product Code
+2020-02-21 12:55:09,305 - Database connection established successful with server address and host
+2020-02-21 12:55:21,285 - User gave a Product Code YHT-1840 
+2020-02-21 12:55:21,385 - User queried product details for YHT-1840  Product Code
+
+
+
+SET 01 EXCEPTIONS
+
