@@ -249,3 +249,18 @@ for r in range(0,10):
         print(r,e)
 
 
+OUTPUT:
+Enter a number to start with : 4                                                                                          
+Enter the end number : 7                                                                                                  
+Exception: Value above 5 will give you an output                                                                          
+[0, 1, 4, 9, 16, 25]                                                                                                      
+[1, 4, 9, 16, 25, 36]                                                                                                     
+[4, 9, 16, 25, 36, 49]                                                                                                    
+Number of  3 in the list= 2                                                                                               
+count() takes exactly one argument (0 given)                                                                              
+'list' object has no attribute 'capitalize'                                                                               
+[0, 1, 4, 9, 16, 25]                                                                                                      
+[1, 4, 9, 16, 25, 36]                                                                                                     
+[4, 9, 16, 25, 36, 49]                                                                                                    
+3 list index out of range                                                                                                 
+4 list index out of range
