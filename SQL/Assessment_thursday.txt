@@ -1,4 +1,11 @@
 1	Fetch publisher information who have publish_city <> author_city and check if publish_city = author_country . display the correct publisher_city along with other publisher information based on author_city
+select p.publish_id,p.publish_name,publish_city as correct_publish_city,publish_start_date,branches from publisher p join author a on p.publish_city<>a.author_city and p.publish_city=a.author_country;
++------------+--------------------------+----------------------+--------------------+----------+
+| publish_id | publish_name             | correct_publish_city | publish_start_date | branches |
++------------+--------------------------+----------------------+--------------------+----------+
+| PB02       | Summer Night Publication | Canada               | 2019-08-31         | 25       |
++------------+--------------------------+----------------------+--------------------+----------+
+1 row in set (0.00 sec)
 
 2	Fetch authors_name, author_country, publish_city, publish_start_date, branches who have publications with most number of branches by century
 
@@ -45,8 +52,21 @@ mysql> select AUTHOR_ID,AUTHOR_NAME,case when AUTHOR_CITY='Berlin' then 'GERMANY
 +-----------+----------------------+----------------+---------------+------------+
 10 rows in set (0.00 sec)
 5	Fetch authors who do not have publisher from their country
-mysql> select PUBLISH_NAME,PUBLISH_CITY,AUTHOR_COUNTRY,AUTHOR_CITY FROM AUTHOR a inner join publisher p using(PUBLISH_ID) where AUTHOR_COUNTRY in(select AUTHOR_COUNTRY from AUTHOR a inner join publisher p using(PUBLISH_ID)  where PUBLISH_CITY!=AUTHOR_CITY);
-
+select author_id,author_name,author_country,author_city from (select author_id,author_name,author_country,
+    -> CASE WHEN publish_city="berlin" and author_country not in("germany","europe") then "true" when publish_city="new jersy"
+    -> and author_country<>"usa" then "true"  when publish_city="london" and author_country not in("uk","europe") then "true"
+    -> when author_city="canada" and publish_city<>"canada" then "true"end as publish_city,author_city, a.publish_id,publish_name
+    -> from author a join publisher p on a.publish_id=p.publish_id)as temp where publish_city is not null;
++-----------+----------------------+----------------+-------------+
+| author_id | author_name          | author_country | author_city |
++-----------+----------------------+----------------+-------------+
+| AUT001    | William Norton       | UK             | Cambridge   |
+| AUT003    | John Betjeman Hunter | RUSSIA         | Moscow      |
+| AUT004    | John Betjeman Hunter | CANADA         | Toronto     |
+| AUT005    | S.B.Swaminathan      | INDIA          | Delhi       |
+| AUT009    | Drek Tailor          | Australia      | Melbourne   |
++-----------+----------------------+----------------+-------------+
+5 rows in set (0.00 sec)
 6	Fetch author details if first character of publisher name is same as author_name
 
 mysql> select AUTHOR_ID,AUTHOR_NAME,AUTHOR_COUNTRY,AUTHOR_CITY,PUBLISH_ID FROM AUTHOR a inner join publisher p using(PUBLISH_ID)  where substr(PUBLISH_NAME,1,1)=substr(AUTHOR_NAME,1,1);
